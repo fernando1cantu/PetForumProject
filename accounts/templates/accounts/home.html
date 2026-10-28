@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PetForum - Home</title>
+    <link rel="stylesheet" href="{% static 'accounts/styles.css' %}">
+</head>
+<body>
+    <h1>Welcome to PetForum 🐾</h1>
+    <p>Connect with other pet owners who share your passion!</p>
+    
+    <div>
+        <a href="{% url 'register' %}">Register</a> | 
+        <a href="{% url 'login' %}">Login</a>
+    </div>
+</body>
+</html>
