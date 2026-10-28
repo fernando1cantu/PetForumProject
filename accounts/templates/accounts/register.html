@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PetForum - Register</title>
+    <link rel="stylesheet" href="{% static 'accounts/styles.css' %}">
+</head>
+<body>
+    <h1>Join PetForum 🐾</h1>
+    <p>Create an account to connect with other pet owners.</p>
+
+    <form method="POST" class="auth-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" placeholder="Username">
+        </div>
+        <div class="form-group">
+            <input type="email" placeholder="Email Address">
+        </div>
+        <div class="form-group">
+            <input type="password" placeholder="Password">
+        </div>
+        <button type="submit" class="btn-submit">Register</button>
+    </form>
+    
+    <div class="form-links">
+        <a href="{% url 'home' %}">Back to Home</a> | 
+        <a href="{% url 'login' %}">Already have an account? Login</a>
+    </div>
+</body>
+</html>
