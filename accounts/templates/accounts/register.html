@@ -10,19 +10,16 @@
     <h1>Join PetForum 🐾</h1>
     <p>Create an account to connect with other pet owners.</p>
 
-    <form method="POST" class="auth-form">
-        {% csrf_token %}
-        <div class="form-group">
-            <input type="text" placeholder="Username">
-        </div>
-        <div class="form-group">
-            <input type="email" placeholder="Email Address">
-        </div>
-        <div class="form-group">
-            <input type="password" placeholder="Password">
-        </div>
-        <button type="submit" class="btn-submit">Register</button>
-    </form>
+    
+<form method="POST" class="auth-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn-submit">
+        Register
+    </button>
+</form>
+
     
     <div class="form-links">
         <a href="{% url 'home' %}">Back to Home</a> | 
