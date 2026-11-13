@@ -2,28 +2,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>PetForum - Register</title>
-    <link rel="stylesheet" href="{% static 'accounts/styles.css' %}">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create an account — PetForum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'accounts/styles.css' %}">
 </head>
-<body>
-    <h1>Join PetForum 🐾</h1>
-    <p>Create an account to connect with other pet owners.</p>
-
-    
-<form method="POST" class="auth-form">
-    {% csrf_token %}
-    {{ form.as_p }}
-
-    <button type="submit" class="btn-submit">
-        Register
-    </button>
-</form>
-
-    
-    <div class="form-links">
-        <a href="{% url 'home' %}">Back to Home</a> | 
-        <a href="{% url 'login' %}">Already have an account? Login</a>
-    </div>
+<body class="auth-body">
+  <main class="auth-layout">
+    <section class="auth-photo-panel auth-register-photo"><a class="brand auth-logo" href="{% url 'home' %}"><span class="brand-symbol" aria-hidden="true">✳</span> petforum<span class="brand-period">.</span></a>
+      <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&amp;fit=crop&amp;w=1400&amp;q=85" alt="Curious cat looking toward the camera" class="auth-panel-photo">
+      <div class="auth-photo-tint"></div><div class="auth-panel-words"><span class="eyebrow">A PLACE FOR EVERY PET LOVER</span><h2>Every great story<br><em>starts somewhere.</em></h2><p>Yours starts right here.</p></div>
+      <span class="auth-panel-caption">GOOD COMPANY FOR GREAT COMPANIONS</span>
+    </section>
+    <section class="auth-form-panel"><div class="auth-form-content auth-register-content">
+      <a href="{% url 'home' %}" class="back-link"><span aria-hidden="true">←</span> Back to homepage</a>
+      <div class="eyebrow eyebrow-green"><span class="eyebrow-line"></span> JOIN THE COMMUNITY</div><h1>Let's make<br><em>introductions.</em></h1><p class="auth-subtitle">Create your account and find your people.</p>
+      <form method="post" action="{% url 'register' %}" class="premium-form" novalidate>
+        {% csrf_token %}
+        {% if form.non_field_errors %}<div class="form-errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+        <div class="form-field"><label for="{{ form.username.id_for_label }}">Username</label>{{ form.username }}{% if form.username.errors %}<div class="field-errors" role="alert">{{ form.username.errors }}</div>{% endif %}</div>
+        <div class="form-field"><label for="{{ form.password1.id_for_label }}">Password</label>{{ form.password1 }}{% if form.password1.errors %}<div class="field-errors" role="alert">{{ form.password1.errors }}</div>{% endif %}</div>
+        <div class="form-field"><label for="{{ form.password2.id_for_label }}">Confirm password</label>{{ form.password2 }}{% if form.password2.errors %}<div class="field-errors" role="alert">{{ form.password2.errors }}</div>{% endif %}</div>
+        <p class="form-help">Use a unique username and a strong password. Django will check your password requirements.</p>
+        <button class="button button-primary form-submit" type="submit">Create my account <span aria-hidden="true">↗</span></button>
+      </form>
+      <p class="auth-switch">Already part of the pack? <a href="{% url 'login' %}">Log in <span aria-hidden="true">→</span></a></p>
+    </div><span class="auth-bottom">PetForum · A place for every pet lover.</span></section>
+  </main>
 </body>
 </html>

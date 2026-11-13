@@ -1,11 +1,32 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>PetForum - Login</title>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log in — PetForum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'accounts/styles.css' %}">
 </head>
-<body>
-    <h2>Login to PetForum</h2>
-    <a href="{% url 'home' %}">Back to Home</a>
+<body class="auth-body">
+  <main class="auth-layout">
+    <section class="auth-photo-panel"><a class="brand auth-logo" href="{% url 'home' %}"><span class="brand-symbol" aria-hidden="true">✳</span> petforum<span class="brand-period">.</span></a>
+      <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&amp;fit=crop&amp;w=1400&amp;q=85" alt="Friendly golden retriever" class="auth-panel-photo">
+      <div class="auth-photo-tint"></div><div class="auth-panel-words"><span class="eyebrow">A SPACE TO BELONG</span><h2>Better together.<br><em>Always.</em></h2><p>All the little things are better shared.</p></div>
+      <span class="auth-panel-caption">THE PET PEOPLE CLUB — EST. 2026</span>
+    </section>
+    <section class="auth-form-panel"><div class="auth-form-content">
+      <a href="{% url 'home' %}" class="back-link"><span aria-hidden="true">←</span> Back to homepage</a>
+      <div class="eyebrow eyebrow-green"><span class="eyebrow-line"></span> WELCOME BACK</div><h1>Good to see<br>you <em>again.</em></h1><p class="auth-subtitle">Your community is right where you left it.</p>
+      {% if messages %}<div class="messages" role="status">{% for message in messages %}<p class="alert-message">{{ message }}</p>{% endfor %}</div>{% endif %}
+      <form method="post" action="{% url 'login' %}" class="premium-form">
+        {% csrf_token %}
+        <div class="form-field"><label for="login-username">Username</label><input id="login-username" name="username" type="text" autocomplete="username" placeholder="Enter your username" required autofocus></div>
+        <div class="form-field"><label for="login-password">Password</label><input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required></div>
+        <button class="button button-primary form-submit" type="submit">Log in to PetForum <span aria-hidden="true">↗</span></button>
+      </form>
+      <p class="auth-switch">New around here? <a href="{% url 'register' %}">Create your account <span aria-hidden="true">→</span></a></p>
+    </div><span class="auth-bottom">PetForum · A place for every pet lover.</span></section>
+  </main>
 </body>
 </html>
