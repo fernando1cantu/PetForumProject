@@ -102,33 +102,26 @@
             <h2 id="communities-title" class="section-title">A community for<br><em>every companion.</em></h2></div>
           <div class="section-intro"><p>From playful pups to fascinating reptiles, there's room here for every kind of love.</p><span class="section-note">Explore six dedicated spaces ↓</span></div>
         </div>
+        
         <div class="community-grid">
-          <article class="community-card community-card-dogs">
-            <div class="community-photo"><img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Portrait of a dog" loading="lazy"></div>
-            <div class="community-bottom"><span class="community-num">01 / COMMUNITY</span><h3>Dogs <span aria-hidden="true">↗</span></h3><p>For the endlessly loyal.</p><span class="status-pill">Coming soon</span></div>
-          </article>
-          <article class="community-card community-card-cats">
-            <div class="community-photo"><img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Portrait of a cat" loading="lazy"></div>
-            <div class="community-bottom"><span class="community-num">02 / COMMUNITY</span><h3>Cats <span aria-hidden="true">↗</span></h3><p>For the beautifully independent.</p><span class="status-pill">Coming soon</span></div>
-          </article>
-          <article class="community-card community-card-birds">
-            <div class="community-photo"><img src="https://images.unsplash.com/photo-1452570053594-1b985d6ea890?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Colorful bird in nature" loading="lazy"></div>
-            <div class="community-bottom"><span class="community-num">03 / COMMUNITY</span><h3>Birds <span aria-hidden="true">↗</span></h3><p>For the free spirits.</p><span class="status-pill">Coming soon</span></div>
-          </article>
-          <article class="community-card community-card-aquatics">
-            <div class="community-photo"><img src="https://images.unsplash.com/photo-1524704654690-b56c05c78a00?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Aquatic life" loading="lazy"></div>
-            <div class="community-bottom"><span class="community-num">04 / COMMUNITY</span><h3>Aquatics <span aria-hidden="true">↗</span></h3><p>For the worlds beneath the water.</p><span class="status-pill">Coming soon</span></div>
-          </article>
-          <article class="community-card community-card-reptiles">
-            <div class="community-photo"><img src="https://images.unsplash.com/photo-1531386151447-fd76ad50012f?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Reptile in its habitat" loading="lazy"></div>
-            <div class="community-bottom"><span class="community-num">05 / COMMUNITY</span><h3>Reptiles <span aria-hidden="true">↗</span></h3><p>For the wonderfully unusual.</p><span class="status-pill">Coming soon</span></div>
-          </article>
-          <article class="community-card community-card-small">
-            <div class="community-photo"><img src="https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Small rabbit" loading="lazy"></div>
-            <div class="community-bottom"><span class="community-num">06 / COMMUNITY</span><h3>Small pets <span aria-hidden="true">↗</span></h3><p>For the tiniest personalities.</p><span class="status-pill">Coming soon</span></div>
-          </article>
+          {% for cat in categories %}
+            <a class="community-card community-card-{{ cat.css_modifier }}" href="{% url 'category_detail' cat.slug %}">
+              <div class="community-photo">
+                {% if cat.image_url %}
+                  <img src="{{ cat.image_url }}" alt="{{ cat.name }} community" loading="lazy">
+                {% endif %}
+              </div>
+              <div class="community-bottom">
+                <span class="community-num">{{ cat.number }} / COMMUNITY</span>
+                <h3>{{ cat.name }} <span aria-hidden="true">↗</span></h3>
+                <p>{{ cat.tagline }}</p>
+                <span class="status-pill">{{ cat.posts.count }} discussion{{ cat.posts.count|pluralize }}</span>
+              </div>
+            </a>
+          {% empty %}
+            <p style="color: var(--muted); grid-column: 1 / -1;">No communities found. Add some categories in the Django admin panel!</p>
+          {% endfor %}
         </div>
-        <p class="community-disclaimer">Community discussion boards are in development. PetForum's account features are available now.</p>
       </div>
     </section>
 
@@ -139,7 +132,6 @@
           <div class="how-step"><span class="step-num">01</span><div><h3>Find your kind of people.</h3><p>Choose the pet community that feels most like home.</p></div><span class="step-arrow" aria-hidden="true">↗</span></div>
           <div class="how-step"><span class="step-num">02</span><div><h3>Ask, share, and discover.</h3><p>Exchange tips, share the little wins, and learn together.</p></div><span class="step-arrow" aria-hidden="true">↗</span></div>
           <div class="how-step"><span class="step-num">03</span><div><h3>Make the connection last.</h3><p>Build relationships around the animals you adore.</p></div><span class="step-arrow" aria-hidden="true">↗</span></div>
-          <p class="how-note">Community conversations are planned for a future release.</p>
         </div>
       </div>
     </section>
