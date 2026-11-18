@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ category.name }} Community — PetForum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'accounts/styles.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="{% url 'home' %}" aria-label="PetForum homepage">
+        <span class="brand-symbol" aria-hidden="true">
+          <svg viewBox="0 0 44 44" fill="none"><path d="M16.2 17.4c-2-2.3-5.4-2-6.8.3-1.5 2.5.5 5.4 3.5 5.5 2.4.1 4.9-3.1 3.3-5.8ZM24.3 13.6c-.3-3.3-2.8-5.5-5.3-4.7-2.8.9-3.4 4.6-1.4 6.6 2.1 2.2 6.9 1.6 6.7-1.9ZM29.6 16.1c2-2.4 5.5-2.1 6.8.5 1.1 2.1-.3 4.9-2.8 5.4-3.3.6-5.8-3.3-4-5.9ZM24.4 23.6c-3.3-3.6-7.8-1.4-9.2 2.3-1 2.6.5 5.2 3.2 5.5 2.5.3 4.4-1.4 6.6-1.4 2.1 0 3.8 1.7 6.2 1.4 2.9-.4 4.2-3.1 2.9-5.6-1.9-3.6-6.9-5.8-9.7-2.2Z" fill="currentColor"/></svg>
+        </span>
+        <span>petforum<span class="brand-period">.</span></span>
+      </a>
+      <nav class="desktop-nav">
+        <a class="nav-link" href="{% url 'home' %}">Home</a>
+        <a class="nav-link is-current" href="{% url 'home' %}#communities">Communities</a>
+      </nav>
+      <div class="header-actions">
+        {% if user.is_authenticated %}
+          <span class="header-welcome">Hi, {{ user.username }}</span>
+          <form method="post" action="{% url 'logout' %}" class="inline-form">
+            {% csrf_token %}
+            <button class="button button-outline button-small" type="submit">Log out</button>
+          </form>
+        {% else %}
+          <a class="header-login" href="{% url 'login' %}">Log in</a>
+          <a class="button button-primary button-small" href="{% url 'register' %}">Join the community <span aria-hidden="true">↗</span></a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="shell section-pad">
+    <!-- Django Flash Messages -->
+    {% if messages %}
+      <div style="margin-bottom: 1.5rem;">
+        {% for message in messages %}
+          <div style="padding: 1rem 1.25rem; border-radius: 10px; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; font-weight: 500;">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Back Navigation & Category Header -->
+    <div style="margin-bottom: 2.5rem;">
+      <a href="{% url 'home' %}#communities" class="text-link" style="display: inline-block; margin-bottom: 1.25rem; font-size: 0.9rem;">← Back to all communities</a>
+      <div class="eyebrow eyebrow-green"><span class="eyebrow-line"></span> {{ category.number }} / COMMUNITY</div>
+      <h1 class="section-title" style="margin-top: 0.5rem;">{{ category.name }}</h1>
+      <p style="font-size: 1.15rem; color: var(--muted); max-width: 60ch;">{{ category.tagline }}</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; align-items: start;">
+      
+      <!-- Left Column: Discussion Feed -->
+      <div style="grid-column: span 2;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <h2 style="font-size: 1.5rem;">Recent Discussions</h2>
+          <span class="status-pill">{{ posts.count }} discussion{{ posts.count|pluralize }}</span>
+        </div>
+
+        {% if posts %}
+          <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+            {% for post in posts %}
+              <article style="background: #ffffff; padding: 1.75rem; border-radius: 16px; border: 1px solid rgba(0,0,0,0.08);">
+                <h3 style="font-size: 1.3rem; margin-bottom: 0.6rem;">
+                  <a href="{% url 'post_detail' post.pk %}" style="text-decoration: none; color: inherit;">
+                    {{ post.title }} <span aria-hidden="true" style="font-size: 1rem; opacity: 0.6;">↗</span>
+                  </a>
+                </h3>
+                <p style="color: var(--muted); line-height: 1.6; margin-bottom: 1.25rem;">{{ post.content|truncatewords:40 }}</p>
+                <div style="font-size: 0.85rem; color: var(--muted); display: flex; justify-content: space-between; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 0.9rem;">
+                  <span>Started by <strong>{{ post.author.username }}</strong></span>
+                  <span>{{ post.created_at|date:"M j, Y · g:i a" }}</span>
+                </div>
+              </article>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div style="background: #ffffff; padding: 3rem 2rem; border-radius: 16px; border: 1px dashed rgba(0,0,0,0.15); text-align: center;">
+            <p style="color: var(--muted); font-size: 1.05rem;">No discussions in {{ category.name }} yet.</p>
+            <p style="color: var(--muted); font-size: 0.9rem; margin-top: 0.35rem;">Start the conversation using the form on the right!</p>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Right Column: Quick Post Box (Submits directly to create_post_view) -->
+      <aside style="background: #ffffff; padding: 2rem; border-radius: 16px; border: 1px solid rgba(0,0,0,0.08);">
+        <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Start a Discussion</h3>
+        <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Share a story, ask a question, or swap tips with fellow {{ category.name|lower }} lovers.</p>
+
+        {% if user.is_authenticated %}
+          <form method="post" action="{% url 'create_post' category.slug %}">
+            {% csrf_token %}
+            <div style="margin-bottom: 1rem;">
+              <label for="title" style="display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.9rem;">Topic Title</label>
+              <input type="text" id="title" name="title" required placeholder="e.g., Best puzzle toys for rainy days?" style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit;">
+            </div>
+            <div style="margin-bottom: 1.25rem;">
+              <label for="content" style="display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.9rem;">Message</label>
+              <textarea id="content" name="content" rows="5" required placeholder="Write your thoughts here..." style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; resize: vertical;"></textarea>
+            </div>
+            <button type="submit" class="button button-primary" style="width: 100%; justify-content: center;">Publish Discussion ↗</button>
+          </form>
+        {% else %}
+          <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 1.25rem;">Log in or create an account to post in this community.</p>
+          <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+            <a href="{% url 'login' %}" class="button button-primary" style="justify-content: center;">Log in</a>
+            <a href="{% url 'register' %}" class="button button-outline" style="justify-content: center;">Create account</a>
+          </div>
+        {% endif %}
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-row">
+      <a class="brand brand-footer" href="{% url 'home' %}">
+        <span class="brand-symbol small-symbol" aria-hidden="true">✳</span>
+        <span>petforum<span class="brand-period">.</span></span>
+      </a>
+      <span>Good company for great companions.</span>
+      <span>© 2026 PetForum · A student project</span>
+    </div>
+  </footer>
+</body>
+</html>

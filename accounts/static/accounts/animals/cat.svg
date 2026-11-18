@@ -1,1 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="bird illustration"><g fill="none" stroke="#f6f4ed" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.92"><path d="M74 163c-24-19-30-56-9-79 23-26 58-17 76-2 13 11 20 25 17 42-4 25-22 45-49 49-13 2-25-2-35-10Z"/><path d="M102 116c8 23 19 35 39 35m-3-68 34 9-25 20"/><circle cx="135" cy="105" r="4" fill="#f6f4ed" stroke="none"/><path d="M99 173v21m19-22v22M88 196h61M64 137 39 153l36 3"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150" fill="none" stroke="#fffefa" stroke-width="6">
+  <path d="M44 58 38 28l24 14a44 44 0 0 1 26 0l24-14-6 30a38 38 0 0 1 6 21c0 22-17 37-37 37s-37-15-37-37c0-8 2-15 6-21Z" />
+  <path d="M56 76c3-4 9-4 12 0" />
+  <path d="M82 76c3-4 9-4 12 0" />
+  <path d="M71 87h8l-4 5-4-5Z" fill="#fffefa" />
+  <path d="M75 92c0 5-5 8-10 6" />
+  <path d="M75 92c0 5 5 8 10 6" />
+  <path d="M24 78l20 3" />
+  <path d="M24 90l20-2" />
+  <path d="M126 78l-20 3" />
+  <path d="M126 90l-20-2" />
+</svg>
